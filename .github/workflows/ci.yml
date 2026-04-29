@@ -5,12 +5,20 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Set up JDK 17
+
+      # LỖI 3:
+      # Thiếu checkout source code
+      # nên CI báo không thấy pom.xml
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Run build
         run: mvn package
